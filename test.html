@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #box {
+            width: 50px;
+            height: 50px;
+            background-color: blue;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+
+    <script>
+        const box = document.getElementById('box');
+        let velocity = 0;
+        const acceleration = 1;
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'a' || event.key === 'd') {
+                if (event.key === 'a') {
+                    velocity -= acceleration;
+                } else if (event.key === 'd') {
+                    velocity += acceleration;
+                }
+            }
+        });
+
+        function updateBoxPosition() {
+            const currentLeft = parseInt(box.style.left) || 0;
+            const newLeft = currentLeft + velocity;
+            box.style.left = newLeft + 'px';
+
+            // Limit the box within the window's boundaries
+            if (newLeft < 0) {
+                box.style.left = '0px';
+                velocity = 0;
+            } else if (newLeft + box.clientWidth > window.innerWidth) {
+                box.style.left = (window.innerWidth - box.clientWidth) + 'px';
+                velocity = 0;
+            }
+
+            requestAnimationFrame(updateBoxPosition);
+        }
+
+        updateBoxPosition();
+    </script>
+</body>
+</html>
