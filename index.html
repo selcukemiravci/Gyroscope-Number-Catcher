@@ -19,23 +19,6 @@
             justify-content: center; /* Center horizontally */
             align-items: center; /* Center vertically */
         }
-        #basket {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            /* background-color: #3498db; */
-            bottom: 13vh;
-            z-index: 1;
-            left: 50%;
-            margin-left: -50px; /* Half of the width to center horizontally */
-        }
-        #bottomContainer{
-            position: absolute;
-            background-color: rgba(0, 115.81, 4.63, 0.5);
-            height: 20vh;
-            width: 100%;
-            bottom: 0;
-        }
         #clock{
             margin-top: 30px;
             text-align: center; 
@@ -45,10 +28,28 @@
             font-weight: 400; 
             word-wrap: break-word;
         }
+        #basket {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            /* background-color: #3498db; */
+            bottom: 100px;
+            z-index: 1;
+            left: 50%;
+            margin-left: -50px; /* Half of the width to center horizontally */
+        }
+        #bottomContainer{
+            position: absolute;
+            background-color: rgba(0, 115.81, 4.63, 0.5);
+            height: 140px;
+            width: 100%;
+            bottom: 0;
+        }
         #passwordContainer{
-            margin-top: 50px;
+            margin-top: 40px;
             display: flex; /* Add flex display to make the boxes align horizontally */
             justify-content: center; /* Center the boxes horizontally within the container */
+            height: 100px;
 
         }
         #passwordBox{
@@ -57,7 +58,7 @@
             background: #EAFFD0; 
             border-radius: 10px;
             bottom: 0;
-            margin-left: 10px;
+            margin: 5px;
         }
     </style>
 </head>
@@ -68,6 +69,7 @@
     </div>
     <div id = "bottomContainer">    
         <div id = "passwordContainer">
+            <div id = "passwordBox"></div>
             <div id = "passwordBox"></div>
             <div id = "passwordBox"></div>
             <div id = "passwordBox"></div>
