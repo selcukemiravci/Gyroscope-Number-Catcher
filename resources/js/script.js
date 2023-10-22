@@ -1,5 +1,5 @@
 var spawnDelay = 2;
-var password = 1234;
+const password = [1,2,3,4,5];
 const numberBubbles = [
     "./resources/images/numbers/0.png",
     "./resources/images/numbers/1.png",
@@ -12,12 +12,12 @@ const numberBubbles = [
     "./resources/images/numbers/8.png",
     "./resources/images/numbers/9.png"
 ];
-const spawnOrder = [7,1,2,5,3,8,4,0,9];
+const spawnOrder = [7,1,2,5,3,8,4,0,9,5];
 const spawnContainer = document.getElementById("spawn-container");
 const collectedNumbers = [];
 const collectedNumbersList = document.getElementById("collected-numbers");
-
-
+const passwordBoxes = document.querySelectorAll("#password-container > div");
+let passwordIndex = 0; // Index for the password boxes
 const basket = document.getElementById('basket');
 let velocity = 0;
 const acceleration = 1;
@@ -47,8 +47,11 @@ function spawnNumberBubble(number) {
         spawnContainer.removeChild(bubble);
     }, 3100); // Adjust the time before removal as needed
 
-    // Detect collision with the basket
+     // Detect collision with the basket
     setInterval(() => {
+        if (!spawnContainer.contains(bubble)) {
+            return; // The bubble has already been removed
+        }
         const bubbleRect = bubble.getBoundingClientRect();
         const basketRect = basket.getBoundingClientRect();
 
@@ -60,7 +63,23 @@ function spawnNumberBubble(number) {
         ) {
             // Collision detected, add the number to the collected list
             collectedNumbers.push(number);
-            console.log(number)
+            console.log(number);
+
+            // Update the password box with '*'
+            if (passwordIndex < passwordBoxes.length) {
+                passwordBoxes[passwordIndex].textContent = '*';
+                passwordIndex++;
+            }
+
+            if (passwordIndex === passwordBoxes.length) {
+                // All password boxes are filled; check if the collected numbers match the password
+                if (JSON.stringify(collectedNumbers) === JSON.stringify(password)) {
+                    alert("Password is correct!");
+                } else {
+                    alert("Password is incorrect!");
+                }
+            }
+
             if (spawnContainer.contains(bubble)) {
                 spawnContainer.removeChild(bubble);
             }
