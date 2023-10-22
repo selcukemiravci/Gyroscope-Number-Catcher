@@ -27,6 +27,12 @@ function spawnNumberBubble(number) {
     bubble.style.width = "50px"; // Set the width as needed
     bubble.style.height = "50px"; // Set the height as needed
     spawnContainer.appendChild(bubble);
+
+    // Animate the bubble's vertical position
+    setTimeout(() => {
+        bubble.style.transition = "top 5s linear"; // Adjust the duration as needed
+        bubble.style.top = (window.innerHeight - 100) + "px"; // Adjust the final Y position
+    }, 100); // Adjust the delay as needed
 }
 
 function spawnNumbersInOrder() {
