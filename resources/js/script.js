@@ -58,7 +58,7 @@ function spawnNumberBubble(number) {
         if (
             bubbleRect.left + bubbleRect.width > basketRect.left &&
             bubbleRect.left < basketRect.left + basketRect.width &&
-            bubbleRect.top + bubbleRect.height > basketRect.top &&
+            bubbleRect.top + bubbleRect.height-20 > basketRect.top &&
             bubbleRect.top < basketRect.top + basketRect.height
         ) {
             // Collision detected, add the number to the collected list
@@ -101,7 +101,7 @@ function spawnNumbersInOrder() {
         if (spawnIndex < spawnOrder.length) {
             spawnNumberBubble(spawnOrder[spawnIndex]);
         }
-    }, 1000); // Adjust the interval as needed
+    }, 1500); // Adjust the interval as needed
 
     // Check if we've reached the end of the spawnOrder and reset the index
     if (spawnIndex === spawnOrder.length - 1) {
