@@ -1,6 +1,7 @@
 var spawnDelay = 2;
 var password = 1234;
 const numberBubbles = [
+    "./resources/images/numbers/0.png",
     "./resources/images/numbers/1.png",
     "./resources/images/numbers/2.png",
     "./resources/images/numbers/3.png",
@@ -9,11 +10,18 @@ const numberBubbles = [
     "./resources/images/numbers/6.png",
     "./resources/images/numbers/7.png",
     "./resources/images/numbers/8.png",
-    "./resources/images/numbers/9.png",
-    "./resources/images/numbers/0.png"
+    "./resources/images/numbers/9.png"
 ];
 const spawnOrder = [7,1,2,5,3,8,4,0,9];
 const spawnContainer = document.getElementById("spawn-container");
+const collectedNumbers = [];
+const collectedNumbersList = document.getElementById("collected-numbers");
+
+
+const basket = document.getElementById('basket');
+let velocity = 0;
+const acceleration = 1;
+
 
 
 
@@ -33,6 +41,31 @@ function spawnNumberBubble(number) {
         bubble.style.transition = "top 5s linear"; // Adjust the duration as needed
         bubble.style.top = (window.innerHeight - 100) + "px"; // Adjust the final Y position
     }, 100); // Adjust the delay as needed
+
+    // Remove the bubble after 2 seconds
+    setTimeout(() => {
+        spawnContainer.removeChild(bubble);
+    }, 3100); // Adjust the time before removal as needed
+
+    // Detect collision with the basket
+    setInterval(() => {
+        const bubbleRect = bubble.getBoundingClientRect();
+        const basketRect = basket.getBoundingClientRect();
+
+        if (
+            bubbleRect.left + bubbleRect.width > basketRect.left &&
+            bubbleRect.left < basketRect.left + basketRect.width &&
+            bubbleRect.top + bubbleRect.height > basketRect.top &&
+            bubbleRect.top < basketRect.top + basketRect.height
+        ) {
+            // Collision detected, add the number to the collected list
+            collectedNumbers.push(number);
+            console.log(number)
+            if (spawnContainer.contains(bubble)) {
+                spawnContainer.removeChild(bubble);
+            }
+        }
+    }, 100); // Adjust the interval as needed
 }
 
 function spawnNumbersInOrder() {
@@ -47,39 +80,34 @@ function spawnNumbersInOrder() {
     }, 1000); // Adjust the interval as needed
 }
 
+window.addEventListener('deviceorientation', (event) => {
+    if (event.alpha === null) {
+        return;  // no support
+    }
+
+    // Use the gamma value from the gyroscope for acceleration
+    const accelerationValue = event.gamma / 90 * acceleration;
+
+    velocity += accelerationValue;
+
+    // Limit the basket within the window's boundaries
+    const currentLeft = parseInt(basket.style.left) || 0;
+    const newLeft = currentLeft + velocity;
+    
+    if (newLeft < 0) {
+        basket.style.left = '0px';
+        velocity = 0;
+    } else if (newLeft + basket.clientWidth > window.innerWidth) {
+        basket.style.left = (window.innerWidth - basket.clientWidth) + 'px';
+        velocity = 0;
+    } else {
+        basket.style.left = newLeft + 'px';
+    }
+});
+
+function updatebasketPosition() {
+    requestAnimationFrame(updatebasketPosition);
+}
+
 spawnNumbersInOrder();
-
-const basket = document.getElementById('basket');
-        let velocity = 0;
-        const acceleration = 1;
-
-        window.addEventListener('deviceorientation', (event) => {
-            if (event.alpha === null) {
-                return;  // no support
-            }
-
-            // Use the gamma value from the gyroscope for acceleration
-            const accelerationValue = event.gamma / 90 * acceleration;
-
-            velocity += accelerationValue;
-
-            // Limit the basket within the window's boundaries
-            const currentLeft = parseInt(basket.style.left) || 0;
-            const newLeft = currentLeft + velocity;
-            
-            if (newLeft < 0) {
-                basket.style.left = '0px';
-                velocity = 0;
-            } else if (newLeft + basket.clientWidth > window.innerWidth) {
-                basket.style.left = (window.innerWidth - basket.clientWidth) + 'px';
-                velocity = 0;
-            } else {
-                basket.style.left = newLeft + 'px';
-            }
-        });
-
-        function updatebasketPosition() {
-            requestAnimationFrame(updatebasketPosition);
-        }
-
-        updatebasketPosition();
+updatebasketPosition();
