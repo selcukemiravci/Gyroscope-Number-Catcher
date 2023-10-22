@@ -1,4 +1,4 @@
-var spawnDelay = 2;
+let spawnIndex = 0; // Index for the spawnOrder
 const password = [1,2,3,4,5];
 const numberBubbles = [
     "./resources/images/numbers/0.png",
@@ -47,7 +47,7 @@ function spawnNumberBubble(number) {
         spawnContainer.removeChild(bubble);
     }, 3100); // Adjust the time before removal as needed
 
-     // Detect collision with the basket
+    // Detect collision with the basket
     setInterval(() => {
         if (!spawnContainer.contains(bubble)) {
             return; // The bubble has already been removed
@@ -74,9 +74,11 @@ function spawnNumberBubble(number) {
             if (passwordIndex === passwordBoxes.length) {
                 // All password boxes are filled; check if the collected numbers match the password
                 if (JSON.stringify(collectedNumbers) === JSON.stringify(password)) {
-                    alert("Password is correct!");
+                    // Redirect to home.html for correct password
+                    window.location.href = "home.html";
                 } else {
-                    alert("Password is incorrect!");
+                    // Redirect to index.html for incorrect password
+                    window.location.href = "index.html";
                 }
             }
 
@@ -85,18 +87,28 @@ function spawnNumberBubble(number) {
             }
         }
     }, 100); // Adjust the interval as needed
+
+    // Check if we've reached the end of the spawnOrder and reset the index
+    if (spawnIndex === spawnOrder.length - 1) {
+        spawnIndex = 0;
+    } else {
+        spawnIndex++;
+    }
 }
 
 function spawnNumbersInOrder() {
-    let index = 0;
     const interval = setInterval(() => {
-        if (index < spawnOrder.length) {
-            spawnNumberBubble(spawnOrder[index]);
-            index++;
-        } else {
-            clearInterval(interval);
+        if (spawnIndex < spawnOrder.length) {
+            spawnNumberBubble(spawnOrder[spawnIndex]);
         }
     }, 1000); // Adjust the interval as needed
+
+    // Check if we've reached the end of the spawnOrder and reset the index
+    if (spawnIndex === spawnOrder.length - 1) {
+        spawnIndex = 0;
+    } else {
+        spawnIndex++;
+    }
 }
 
 window.addEventListener('deviceorientation', (event) => {
