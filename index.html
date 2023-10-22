@@ -13,7 +13,7 @@
             align-items: center; /* Center vertically */
             background-color: #EAFFD0;
         }
-        #topContainer{
+        #top-container{
             height: 80vh; /* Ensure full viewport height */
             width: 100%;
             justify-content: center; /* Center horizontally */
@@ -28,6 +28,12 @@
             font-weight: 400; 
             word-wrap: break-word;
         }
+        #spawn-container{
+            position: relative;
+            margin-top: 10px; 
+            width: 100%; 
+            height: 20px;
+        }
         #basket {
             position: absolute;
             width: 100px;
@@ -36,21 +42,21 @@
             z-index: 1;
             /* left: 38%; */
         }
-        #bottomContainer{
+        #bottom-container{
             position: absolute;
             background-color: rgba(0, 115.81, 4.63, 0.5);
             height: 140px;
             width: 100%;
             bottom: 0;
         }
-        #passwordContainer{
+        #password-container{
             margin-top: 40px;
             display: flex; /* Add flex display to make the boxes align horizontally */
             justify-content: center; /* Center the boxes horizontally within the container */
             height: 100px;
 
         }
-        #passwordBox{
+        #password-box{
             width: 60px; 
             height: 60px; 
             background: #EAFFD0; 
@@ -61,17 +67,20 @@
     </style>
 </head>
 <body>
-    <div id = "topContainer">
+    <div id = "top-container">
         <div id = "clock"> 12:34 </div>
+        <div id = "spawn-container">
+            <!-- <div style="width: 101px; height: 100px; text-align: center; color: white; font-size: 100px; font-family: Inika; font-weight: 400; word-wrap: break-word">1</div> -->
+        </div>
         <img id = "basket" src="./resources/images/basket.png" />
     </div>
-    <div id = "bottomContainer">    
-        <div id = "passwordContainer">
-            <div id = "passwordBox"></div>
-            <div id = "passwordBox"></div>
-            <div id = "passwordBox"></div>
-            <div id = "passwordBox"></div>
-            <div id = "passwordBox"></div>
+    <div id = "bottom-container">    
+        <div id = "password-container">
+            <div id = "password-box"></div>
+            <div id = "password-box"></div>
+            <div id = "password-box"></div>
+            <div id = "password-box"></div>
+            <div id = "password-box"></div>
         </div>
     </div>
  
